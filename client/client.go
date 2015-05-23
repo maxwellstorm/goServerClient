@@ -9,15 +9,20 @@ import (
 )
 
 func main() {
+	var conn net.Conn
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("please enter IP address of server")
-	userInput, _ := reader.ReadString('\n')
-	userInput = strings.TrimSpace(userInput)
-	conn, err := net.Dial("tcp", userInput+":1234")
-	// handle error
-	if err != nil {
-		fmt.Println("an eror has occured")
-		os.Exit(1)
+	for {
+		fmt.Println("please enter IP address and port of server")
+		userInput, _ := reader.ReadString('\n')
+		userInput = strings.TrimSpace(userInput)
+		conn1, err := net.Dial("tcp", userInput)
+		// handle error
+		if err != nil {
+			fmt.Println("error connecting to server")
+		} else {
+			conn = conn1
+			break
+		}
 	}
 	fmt.Println("enter a client name")
 	name, _ := reader.ReadString('\n')
